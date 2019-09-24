@@ -1,24 +1,21 @@
-import { useState, userEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import Couponz from "../APIs/Couponz";
 
 const ConfigurationsHook = groupName => {
-    const [ configurations, setConfigurations ] = useState(null);
+  const [configurations, setConfigurations] = useState(null);
+ debugger;
+  useEffect(() => {
 
-    userEffect(
-        () => {
-            (async groupName => {
-                const response = await axios.get(
-                    `api/SpinAndWin/GetSpinAndWinUIConfigurations?groupName=${groupName}`
-                );
+    const fetchData = async () => {
+        const { data } = await Couponz.get(`api/SpinAndWin/GetSpinAndWinUIConfigurations?groupName=${groupName}`);
+        setConfigurations(data);
+    };
 
-                setConfigurations(response.data);
-            })(groupName);
-        },[groupName]
-    );
+    fetchData();
 
-    return configurations;
+  }, [groupName]);
+
+  return configurations;
 };
 
 export default ConfigurationsHook;
-
-
