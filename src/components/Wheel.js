@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import ConfigurationsHook from "../hooks/ConfigurationsHook";
 import SelectedOfferHook from "../hooks/SelectedOfferHook";
-import SubscriptionHook from "../hooks/SubscriptionHook";
+import { SubscribetoOffer } from "../Actions";
 import history from '../history';
 
 const Wheel = ({match}) => {
@@ -54,7 +54,7 @@ const Wheel = ({match}) => {
   };
 
   const Subscribe = (msisdn, Offer) => {
-    const subscriptionResult = SubscriptionHook(msisdn, Offer.offerNumber);
+    const subscriptionResult = SubscribetoOffer(msisdn, Offer.offerNumber);
     const offerId = Offer.OfferId;
     if (subscriptionResult.ErrorCode === 0) {
       history.push(`/Gift/${offerId}`);
