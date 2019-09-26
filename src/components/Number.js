@@ -1,28 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import history from "../history";
 
 const Number = () => {
-  const obj = { groupName : "test", msisdn : "", ErrorMsg : ""}; ;
+  const obj = { groupName: "test" };
+
+  const [msisdn, setMsisdn] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const onDigitClick = digit => {
-    if (obj.msisdn.length === 11) return;
+    if (msisdn.length === 11) return;
 
-    obj.msisdn = `${obj.msisdn}${digit}`;
-    console.log(obj.msisdn);
+    setMsisdn(msisdn + digit);
+    console.log(msisdn);
   };
 
   const onDigitRemove = () => {
-    obj.msisdn = obj.msisdn.substring(0, obj.msisdn.length - 1);
-    console.log(obj.msisdn);
+    const subedmsisdn = msisdn.substring(0, msisdn.length - 1);
+    setMsisdn(subedmsisdn);
+    console.log(msisdn);
   };
 
   const validateMobileNumber = () => {
     const phoneno = new RegExp(/^(?=\d{11}$)(01)\d+$/);
-    if (phoneno.test(obj.msisdn)) {
-        obj.ErrorMsg = "";
-      history.push(`/Wheel/${obj.msisdn}/${obj.groupName}`);
+    let ErrorMsg = "";
+    if (phoneno.test(msisdn)) {
+      ErrorMsg = "";
+      setErrorMsg(ErrorMsg);
+      history.push(`/Wheel/${msisdn}/${obj.groupName}`);
     } else {
-        obj.ErrorMsg = "Wrong mobile number, please enter the right number";
+      ErrorMsg = "Wrong mobile number, please enter the right number";
+      setErrorMsg(ErrorMsg);
     }
   };
 
@@ -40,11 +47,11 @@ const Number = () => {
           <div className="dial-pad">
             <div>
               <div className="shadow" id="output">
-                {obj.msisdn}
+                {msisdn}
               </div>
 
               <p className="wrong-msg" id="errormsg">
-                {obj.ErrorMsg}
+                {errorMsg}
               </p>
 
               <div className="digits">

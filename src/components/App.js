@@ -7,6 +7,7 @@ import Gift from "./Gift";
 import Error from "./Error";
 import history from "../history";
 
+
 const App = () => {
     return (
         <div className="ui container">
